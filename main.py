@@ -13,10 +13,10 @@ class Net(nn.Module):
         super(Net, self).__init__()
         self.conv1 = nn.Conv2d(1, 32, 3)
         self.conv2 = nn.Conv2d(32, 32, 3)
-        self.conv3 = nn.Conv2d(32, 32, 3)
-        self.conv4 = nn.Conv2d(32, 16, 3)
+        self.conv3 = nn.Conv2d(32, 16, 3)
+        self.conv4 = nn.Conv2d(16, 16, 3)
         self.dropout1 = nn.Dropout2d(0.25)
-        self.dropout2 = nn.Dropout2d(0.1)
+        self.dropout2 = nn.Dropout2d(0.25)
         self.fc1 = nn.Linear(1024, 18)
         self.fc2 = nn.Linear(18, 3)
 
@@ -89,7 +89,7 @@ def main():
                         help='number of epochs to train (default: 14)')
     parser.add_argument('--lr', type=float, default=1.0, metavar='LR',
                         help='learning rate (default: 1.0)')
-    parser.add_argument('--gamma', type=float, default=0.7, metavar='M',
+    parser.add_argument('--gamma', type=float, default=0.85, metavar='M',
                         help='Learning rate step gamma (default: 0.7)')
     parser.add_argument('--no-cuda', action='store_true', default=False,
                         help='disables CUDA training')
