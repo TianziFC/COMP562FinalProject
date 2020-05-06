@@ -12,27 +12,26 @@ class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.conv1 = nn.Conv2d(1, 32, 3)
-        self.conv2 = nn.Conv2d(32, 64, 3)
-        self.conv3 = nn.Conv2d(64, 128, 3)
-        self.conv4 = nn.Conv2d(128, 128, 3)
+        self.conv2 = nn.Conv2d(32, 32, 3)
+        self.conv3 = nn.Conv2d(32, 32, 3)
+        self.conv4 = nn.Conv2d(32, 32, 3)
         self.dropout1 = nn.Dropout2d(0.25)
         self.dropout2 = nn.Dropout2d(0.1)
-        self.fc1 = nn.Linear(32768, 48)
+        self.fc1 = nn.Linear(2048, 48)
         self.fc2 = nn.Linear(48, 3)
 
     def forward(self, x):
         x = self.conv1(x)
         x = F.relu(x)
-        x = F.max_pool2d(x, 2)
         x = self.conv2(x)
         x = F.relu(x)
-        x = F.max_pool2d(x, 2)
+        x = F.avg_pool2d(x, 2)
         x = self.conv3(x)
         x = F.relu(x)
-        x = F.max_pool2d(x, 2)
+        x = F.max_pool2d(x, 4)
         x = self.conv4(x)
         x = F.relu(x)
-        x = F.max_pool2d(x, 2)
+        x = F.max_pool2d(x, 4)
         x = self.dropout1(x)
         x = torch.flatten(x, 1)
         x = self.fc1(x)
@@ -86,11 +85,11 @@ def main():
                         help='input batch size for training (default: 64)')
     parser.add_argument('--test-batch-size', type=int, default=100, metavar='N',
                         help='input batch size for testing (default: 1000)')
-    parser.add_argument('--epochs', type=int, default=14, metavar='N',
+    parser.add_argument('--epochs', type=int, default=8, metavar='N',
                         help='number of epochs to train (default: 14)')
     parser.add_argument('--lr', type=float, default=1.0, metavar='LR',
                         help='learning rate (default: 1.0)')
-    parser.add_argument('--gamma', type=float, default=0.95, metavar='M',
+    parser.add_argument('--gamma', type=float, default=0.7, metavar='M',
                         help='Learning rate step gamma (default: 0.7)')
     parser.add_argument('--no-cuda', action='store_true', default=False,
                         help='disables CUDA training')
